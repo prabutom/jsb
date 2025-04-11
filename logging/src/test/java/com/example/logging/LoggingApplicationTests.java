@@ -1,13 +1,12 @@
 package com.example.logging;
 
-import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
 import com.example.logging.annotation.Loggable;
 import com.example.logging.model.LogDetails;
 import com.example.logging.service.LoggingService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
 
 import static org.mockito.ArgumentMatchers.any;
@@ -16,12 +15,12 @@ import static org.mockito.Mockito.verify;
 
 @SpringBootTest
 @Import(TestConfig.class)
-class LoggingApplicationTests {
+class LoggingFrameworkTest {
 
 	@Autowired
 	private TestService testService;
 
-	@Autowired
+	@MockBean
 	private LoggingService loggingService;
 
 	@Test
@@ -39,16 +38,17 @@ class LoggingApplicationTests {
 		}
 		verify(loggingService, times(1)).log(any(LogDetails.class));
 	}
-}
 
-class TestService {
-	@Loggable
-	public String loggedMethod(String param1, int param2) {
-		return "result";
-	}
+	// Test service class
+	static class TestService {
+		@Loggable
+		public String loggedMethod(String param1, int param2) {
+			return "result";
+		}
 
-	@Loggable
-	public void errorMethod() {
-		throw new RuntimeException("Test exception");
+		@Loggable
+		public void errorMethod() {
+			throw new RuntimeException("Test exception");
+		}
 	}
 }
