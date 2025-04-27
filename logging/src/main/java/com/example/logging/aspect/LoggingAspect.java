@@ -9,6 +9,8 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.reflect.MethodSignature;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StopWatch;
 
@@ -21,13 +23,20 @@ import java.util.stream.IntStream;
 @Slf4j
 @RequiredArgsConstructor
 public class LoggingAspect {
+    private static final Logger logger = LoggerFactory.getLogger(LoggingAspect.class);
     private final LoggingService loggingService;
 
     @Around("@annotation(loggable)")
     public Object logMethod(ProceedingJoinPoint joinPoint, Loggable loggable) throws Throwable {
+        System.out.println("[DEBUG]isLoggingEnabled: " + loggingService.isLoggingEnabled());
+        logger.debug("Aspect triggered for method: {}", joinPoint.getSignature());
+        System.out.println("ASPECT TRIGGERED FOR: " + joinPoint.getSignature());
+
         if (!loggingService.isLoggingEnabled()) {
+            logger.warn("Logging is disabled!");
             return joinPoint.proceed();
         }
+        logger.debug("Proceeding with logging...");
 
         MethodSignature signature = (MethodSignature) joinPoint.getSignature();
         String className = signature.getDeclaringType().getSimpleName();
