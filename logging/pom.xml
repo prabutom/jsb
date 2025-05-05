@@ -13,6 +13,7 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<name>logging</name>
 	<description>Logging Framework</description>
+	<packaging>jar</packaging>
 	<url/>
 	<licenses>
 		<license/>
@@ -28,7 +29,9 @@
 	</scm>
 	<properties>
 		<java.version>17</java.version>
+		<skipTests>true</skipTests>
 	</properties>
+
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>

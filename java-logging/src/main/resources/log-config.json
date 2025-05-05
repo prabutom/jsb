@@ -1,0 +1,28 @@
+{
+  "level": "INFO",
+  "handlers": [
+    {
+      "type": "console",
+      "format": "simple"
+    },
+    {
+      "type": "file",
+      "path": "logs/application.log",
+      "format": "json"
+    },
+    {
+      "type": "database",
+      "jdbcUrl": "jdbc:mysql://localhost:3306/logs_db",
+      "username": "loguser",
+      "password": "password",
+      "tableName": "app_logs",
+      "format": "json"
+    },
+    {
+      "type": "remote",
+      "endpoint": "https://api.yourlogservice.com/logs",
+      "authToken": "your-api-token",
+      "format": "xml"
+    }
+  ]
+}
