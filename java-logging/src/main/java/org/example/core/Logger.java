@@ -18,4 +18,5 @@ public interface Logger {
     String getName();
     LogLevel getLevel();
     void setLevel(LogLevel level);
+    void log(LogLevel level, String message, Throwable throwable);
 }

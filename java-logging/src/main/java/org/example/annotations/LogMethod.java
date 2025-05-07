@@ -1,5 +1,7 @@
 package org.example.annotations;
 
+import org.example.core.LogLevel;
+
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -11,7 +13,7 @@ public @interface LogMethod {
     /**
      * Log level for this method
      */
-    org.example.core.LogLevel value() default org.example.core.LogLevel.INFO;
+    LogLevel value() default LogLevel.INFO;
 
     /**
      * Custom message prefix

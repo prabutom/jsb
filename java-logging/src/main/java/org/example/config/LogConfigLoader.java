@@ -2,10 +2,8 @@ package org.example.config;
 
 import org.example.core.LogLevel;
 import org.example.exceptions.LogConfigurationException;
-import org.example.formatters.JsonFormatter;
-import org.example.formatters.SimpleFormatter;
-import org.example.handlers.ConsoleHandler;
-import org.example.handlers.FileHandler;
+import org.example.formatters.*;
+import org.example.handlers.*;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -14,6 +12,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 
 import org.json.JSONObject;
 import org.json.JSONTokener;
@@ -70,30 +69,6 @@ public class LogConfigLoader {
         }
 
         return new LogConfig(level, handlers);
-    }
-
-    private static LogHandler createHandler(String type, JSONObject handlerJson) {
-        switch (type.toLowerCase()) {
-            case "console":
-                String consoleFormat = handlerJson.optString("format", "simple");
-                return new ConsoleHandler(createFormatter(consoleFormat, handlerJson));
-            case "file":
-                String filePath = handlerJson.getString("path");
-                String fileFormat = handlerJson.optString("format", "simple");
-                return new FileHandler(createFormatter(fileFormat, handlerJson), filePath);
-            default:
-                return null;
-        }
-    }
-
-    private static LogFormatter createFormatter(String format, JSONObject config) {
-        switch (format.toLowerCase()) {
-            case "json":
-                return new JsonFormatter();
-            case "simple":
-            default:
-                return new SimpleFormatter();
-        }
     }
 
     // Add these methods to the existing LogConfigLoader class

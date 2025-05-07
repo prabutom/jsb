@@ -76,7 +76,8 @@ class StandardLogger implements Logger {
         log(LogLevel.FATAL, message, throwable);
     }
 
-    private void log(LogLevel level, String message, Throwable throwable) {
+    @Override
+    public void log(LogLevel level, String message, Throwable throwable) {
         if (this.level.ordinal() <= level.ordinal()) {
             for (LogHandler handler : handlers) {
                 handler.handle(name, level, message, throwable);
